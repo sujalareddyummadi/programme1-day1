@@ -1,0 +1,54 @@
+# returns minium number of jumps to reach arr[n-1] from arr[0]
+def minjumps(arr,n ):
+    # the number of jumps needed to reach the starting index is 0
+    if (n <= 1):
+        return 0
+
+    # return -1 if not possible to jump
+    if (arr[0] ==0):
+        return -1
+
+    # intialization
+    # stores all the time the maximal reachable index in the array
+    maxreach = arr[0]
+    # stores the amount of steps we can still take
+    step = arr[0]
+    # stores the amount of jumps necessary to reach that maximal reachable position
+    jump = 1
+
+    # start traversing array
+
+    for i in range(1, n):
+        # check if we have reached the end of the array
+        if (i == n - 1):
+            return jump
+
+        # updating maxreach
+        maxreach = max(maxreach, i + arr[i])
+
+        #we use a step to get to the current index
+        step -=1;
+
+        # if no further steps left
+        if (step == 0):
+            # we must have used a jump
+            jump += 1
+
+            #check if the current index / position or lesser index
+            #is the maximum reach point from the previous indexes
+            if (i >= maxreach):
+                return -1
+
+            # re-initialize the steps to the amount
+            # of step to reach maxreach from position i.
+            step = maxreach - i;
+        return -1
+
+
+# driver program to test above function
+arr = [1, 3, 5, 8, 9, 2, 6, 7, 6, 8, 9]
+
+size = len(arr)
+
+# calling the minjumps function
+print("minimum number of jumps to reach end is % d " % minjumps(arr, size))
